@@ -1,0 +1,18 @@
+.header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 24px 32px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.title {
+  margin: 0 0 4px 0;
+  font-size: 28px;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.85;
+}
