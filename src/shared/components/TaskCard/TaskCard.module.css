@@ -18,6 +18,16 @@
   text-decoration: line-through;
 }
 
+.toggle {
+  cursor: pointer;
+  user-select: none;
+  font-size: 18px;
+}
+
+.title {
+  flex: 1;
+}
+
 .priority {
   font-size: 12px;
   padding: 2px 8px;
@@ -38,4 +48,20 @@
 .low {
   background: #dcfce7;
   color: #16a34a;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.deleteBtn:hover {
+  background: #fee2e2;
+  color: #dc2626;
 }

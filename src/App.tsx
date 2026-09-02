@@ -7,14 +7,21 @@ function App() {
     { id: 1, title: "Learn React basics", completed: true, priority: "high", category: "Learning" },
     { id: 2, title: "Build TaskFlow app", completed: false, priority: "high", category: "Learning" },
     { id: 3, title: "Master JSX syntax", completed: false, priority: "medium", category: "Learning" },
-    { id: 5, title: "Buy groceries", completed: false, priority: "medium", category: "Personal" },
     { id: 4, title: "Style the app", completed: false, priority: "low", category: "Learning" },
+    { id: 5, title: "Buy groceries", completed: false, priority: "medium", category: "Personal" },
     { id: 6, title: "Call dentist", completed: true, priority: "low", category: "Personal" },
   ];
 
   const completedCount = tasks.filter(task => task.completed).length;
-
   const categories = [...new Set(tasks.map(task => task.category))];
+
+  const handleToggle = (id: number) => {
+    console.log("Toggle task:", id);
+  };
+
+  const handleDelete = (id: number) => {
+    console.log("Delete task:", id);
+  };
 
   return (
     <div style={{ maxWidth: "600px", margin: "40px auto", padding: "0 20px" }}>
@@ -29,7 +36,11 @@ function App() {
             <h2 style={{ fontSize: "18px", marginBottom: "8px", color: "#4b5563" }}>
               {category}
             </h2>
-            <TaskList tasks={tasks.filter(task => task.category === category)} />
+            <TaskList
+              tasks={tasks.filter(task => task.category === category)}
+              onToggle={handleToggle}
+              onDelete={handleDelete}
+            />
           </section>
         ))}
       </main>

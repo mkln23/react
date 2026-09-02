@@ -1,19 +1,33 @@
 import styles from "./TaskCard.module.css";
 
 interface TaskCardProps {
+  id: number;
   title: string;
   completed: boolean;
   priority: "high" | "medium" | "low";
+  onToggle: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
-function TaskCard({ title, completed, priority }: TaskCardProps) {
+function TaskCard({ id, title, completed, priority, onToggle, onDelete }: TaskCardProps) {
   return (
     <li className={`${styles.card} ${completed ? styles.completed : ""}`}>
-      <span>{completed ? "✅" : "⬜"}</span>
-      <span>{title}</span>
+      <span
+        className={styles.toggle}
+        onClick={() => onToggle(id)}
+      >
+        {completed ? "✅" : "⬜"}
+      </span>
+      <span className={styles.title}>{title}</span>
       <span className={`${styles.priority} ${styles[priority]}`}>
         {priority}
       </span>
+      <button
+        className={styles.deleteBtn}
+        onClick={() => onDelete(id)}
+      >
+        ✕
+      </button>
     </li>
   );
 }
