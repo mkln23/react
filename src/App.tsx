@@ -1,26 +1,69 @@
+import { useState } from "react";
 import Header from "./shared/components/Header/Header";
 import TaskList from "./shared/components/TaskList/TaskList";
 import type { Task } from "./shared/types/types";
 
 function App() {
-  const tasks: Task[] = [
-    { id: 1, title: "Learn React basics", completed: true, priority: "high", category: "Learning" },
-    { id: 2, title: "Build TaskFlow app", completed: false, priority: "high", category: "Learning" },
-    { id: 3, title: "Master JSX syntax", completed: false, priority: "medium", category: "Learning" },
-    { id: 4, title: "Style the app", completed: false, priority: "low", category: "Learning" },
-    { id: 5, title: "Buy groceries", completed: false, priority: "medium", category: "Personal" },
-    { id: 6, title: "Call dentist", completed: true, priority: "low", category: "Personal" },
+  const initialTasks: Task[] = [
+    {
+      id: 1,
+      title: "Learn React basics",
+      completed: true,
+      priority: "high",
+      category: "Learning",
+    },
+    {
+      id: 2,
+      title: "Build TaskFlow app",
+      completed: false,
+      priority: "high",
+      category: "Learning",
+    },
+    {
+      id: 3,
+      title: "Master JSX syntax",
+      completed: false,
+      priority: "medium",
+      category: "Learning",
+    },
+    {
+      id: 4,
+      title: "Style the app",
+      completed: false,
+      priority: "low",
+      category: "Learning",
+    },
+    {
+      id: 5,
+      title: "Buy groceries",
+      completed: false,
+      priority: "medium",
+      category: "Personal",
+    },
+    {
+      id: 6,
+      title: "Call dentist",
+      completed: true,
+      priority: "low",
+      category: "Personal",
+    },
   ];
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
-  const completedCount = tasks.filter(task => task.completed).length;
-  const categories = [...new Set(tasks.map(task => task.category))];
+  const completedCount = tasks.filter((task) => task.completed).length;
+  const categories = [...new Set(tasks.map((task) => task.category))];
 
-  const handleToggle = (id: number) => {
-    console.log("Toggle task:", id);
-  };
+  function handleToggle(id: number) {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task,
+      ),
+    );
+  }
 
   const handleDelete = (id: number) => {
-    console.log("Delete task:", id);
+    setTasks(tasks.filter(task => task.id !== id))
+
   };
 
   return (
@@ -31,13 +74,19 @@ function App() {
         totalCount={tasks.length}
       />
       <main>
-        {categories.map(category => (
+        {categories.map((category) => (
           <section key={category} style={{ marginBottom: "24px" }}>
-            <h2 style={{ fontSize: "18px", marginBottom: "8px", color: "#4b5563" }}>
+            <h2
+              style={{
+                fontSize: "18px",
+                marginBottom: "8px",
+                color: "#4b5563",
+              }}
+            >
               {category}
             </h2>
             <TaskList
-              tasks={tasks.filter(task => task.category === category)}
+              tasks={tasks.filter((task) => task.category === category)}
               onToggle={handleToggle}
               onDelete={handleDelete}
             />
