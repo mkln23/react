@@ -1,0 +1,67 @@
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.title {
+  flex: 1 1 200px;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.title:focus {
+  border-color: #764ba2;
+}
+
+.priority {
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: white;
+  outline: none;
+  cursor: pointer;
+}
+
+.priority:focus {
+  border-color: #764ba2;
+}
+
+.dueDate {
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  color: #374151;
+  outline: none;
+}
+
+.dueDate:focus {
+  border-color: #764ba2;
+}
+
+.submitBtn {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.submitBtn:hover {
+  opacity: 0.9;
+}
