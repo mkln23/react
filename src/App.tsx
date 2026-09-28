@@ -1,10 +1,9 @@
 import { useState, type FormEvent } from "react";
 import Header from "./shared/components/Header/Header";
 import TaskList from "./shared/components/TaskList/TaskList";
-import type { Task } from "./shared/types/types";
+import type { Filter, Priority, Task } from "./shared/types/types";
 import AddTaskForm from "./shared/components/AddTaskForm/AddTaskForm";
-
-type Priority = "low" | "medium" | "high";
+import FilterTasks from "./shared/components/FilterTasks/FilterTasks";
 
 function App() {
   const initialTasks: Task[] = [
@@ -56,7 +55,8 @@ function App() {
 
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState<Priority>("medium");
-  const [dueDate, setDueDate] = useState("");
+  const [category, setCategory] = useState("");
+  const [taskFilter, setTaskFilter] = useState<Filter>("all");
 
   const completedCount = tasks.filter((task) => task.completed).length;
 
@@ -70,7 +70,7 @@ function App() {
     );
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function addTask(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!title.trim()) {
@@ -82,7 +82,7 @@ function App() {
       title: title.trim(),
       completed: false,
       priority,
-      category: "Personal",
+      category: category,
     };
 
     setTasks((currentTasks) => [...currentTasks, newTask]);
@@ -90,12 +90,18 @@ function App() {
     // Reset form
     setTitle("");
     setPriority("low");
-    setDueDate("");
+    setCategory("");
   }
 
   function handleDelete(id: number) {
     setTasks((currentTasks) => currentTasks.filter((task) => task.id !== id));
   }
+
+  const filteredTasks = tasks.filter((task) => {
+    if (taskFilter === "active") return !task.completed;
+    if (taskFilter === "completed") return task.completed;
+    return true; // "all"
+  });
 
   return (
     <div
@@ -116,10 +122,12 @@ function App() {
         setTitle={setTitle}
         priority={priority}
         setPriority={setPriority}
-        dueDate={dueDate}
-        setDueDate={setDueDate}
-        handleSubmit={handleSubmit}
+        category={category}
+        setCategory={setCategory}
+        handleSubmit={addTask}
       />
+
+      <FilterTasks taskFilter={taskFilter} setTaskFilter={setTaskFilter} />
 
       <main>
         {categories.map((category) => (
@@ -135,7 +143,7 @@ function App() {
             </h2>
 
             <TaskList
-              tasks={tasks.filter((task) => task.category === category)}
+              tasks={filteredTasks.filter((task) => task.category === category)}
               onToggle={handleToggle}
               onDelete={handleDelete}
             />

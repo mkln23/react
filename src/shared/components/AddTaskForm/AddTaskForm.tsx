@@ -1,7 +1,6 @@
-import type { Dispatch, FormEvent, SetStateAction } from "react";
+import { useEffect, useRef, type Dispatch, type FormEvent, type SetStateAction } from "react";
 import styles from "./AddTaskForm.module.css";
-
-type Priority = "high" | "medium" | "low";
+import type { Priority } from "@/shared/types/types";
 
 interface AddTaskFormProps {
   title: string;
@@ -10,8 +9,8 @@ interface AddTaskFormProps {
   priority: Priority;
   setPriority: Dispatch<SetStateAction<Priority>>;
 
-  dueDate: string;
-  setDueDate: Dispatch<SetStateAction<string>>;
+  category: string;
+  setCategory: Dispatch<SetStateAction<string>>;
 
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
@@ -21,14 +20,17 @@ export default function AddTaskForm({
   setTitle,
   priority,
   setPriority,
-  dueDate,
-  setDueDate,
+  category,
+  setCategory,
   handleSubmit,
 }: AddTaskFormProps) {
+  useEffect(() => inputRef.current?.focus())
+  const inputRef = useRef<HTMLInputElement>(null)
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <input
         type="text"
+        ref={inputRef}
         className={styles.title}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -46,10 +48,11 @@ export default function AddTaskForm({
       </select>
 
       <input
-        type="date"
-        className={styles.dueDate}
-        value={dueDate}
-        onChange={(e) => setDueDate(e.target.value)}
+        type="text"
+        className={styles.category}
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        placeholder="Task Category"
       />
 
       <button className={styles.submitBtn} type="submit">
