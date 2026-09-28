@@ -3,37 +3,41 @@ import styles from "./AddTaskForm.module.css";
 import type { Priority } from "@/shared/types/types";
 
 interface AddTaskFormProps {
-  title: string;
-  setTitle: Dispatch<SetStateAction<string>>;
-
   priority: Priority;
   setPriority: Dispatch<SetStateAction<Priority>>;
 
   category: string;
   setCategory: Dispatch<SetStateAction<string>>;
 
-  handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  handleSubmit: (title: string) => void;
 }
 
 export default function AddTaskForm({
-  title,
-  setTitle,
   priority,
   setPriority,
   category,
   setCategory,
   handleSubmit,
 }: AddTaskFormProps) {
-  useEffect(() => inputRef.current?.focus())
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => inputRef.current?.focus(), []);
+
+  function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    handleSubmit(inputRef.current?.value ?? "");
+    if (inputRef.current) {
+      inputRef.current.value = "";
+      inputRef.current.focus();
+    }
+  }
+
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleFormSubmit}>
       <input
         type="text"
         ref={inputRef}
         className={styles.title}
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
         placeholder="Task title"
       />
 

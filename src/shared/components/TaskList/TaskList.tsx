@@ -9,7 +9,7 @@ interface TaskListProps {
 
 function TaskList({ tasks, onToggle, onDelete }: TaskListProps) {
   if (tasks.length === 0) {
-    return <p className={styles.empty}>No tasks yet! Add some to get started.</p>;
+    return <p className={styles.empty}>No matching tasks</p>;
   }
 
   return (

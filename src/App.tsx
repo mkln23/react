@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
 import Header from "./shared/components/Header/Header";
 import TaskList from "./shared/components/TaskList/TaskList";
 import type { Filter, Priority, Task } from "./shared/types/types";
@@ -53,7 +53,6 @@ function App() {
 
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
-  const [title, setTitle] = useState("");
   const [priority, setPriority] = useState<Priority>("medium");
   const [category, setCategory] = useState("");
   const [taskFilter, setTaskFilter] = useState<Filter>("all");
@@ -70,9 +69,7 @@ function App() {
     );
   }
 
-  function addTask(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
+  function addTask(title: string) {
     if (!title.trim()) {
       return;
     }
@@ -88,7 +85,6 @@ function App() {
     setTasks((currentTasks) => [...currentTasks, newTask]);
 
     // Reset form
-    setTitle("");
     setPriority("low");
     setCategory("");
   }
@@ -118,8 +114,6 @@ function App() {
       />
 
       <AddTaskForm
-        title={title}
-        setTitle={setTitle}
         priority={priority}
         setPriority={setPriority}
         category={category}
